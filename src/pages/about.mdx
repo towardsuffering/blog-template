@@ -1,0 +1,56 @@
+---
+layout: '../layouts/BaseLayout.astro'
+title: 'About Chris'
+---
+
+import { Image } from 'astro:assets'
+
+<div class="container mx-auto px-4 py-8 max-w-3xl">
+  <h1 class="text-4xl font-bold mb-6 text-center">Hello, my name is Chris.</h1>
+  
+  <div class="flex flex-col md:flex-row items-start gap-8 mb-12">
+    <Image 
+      src="/assets/dev.svg" 
+      alt="Developer illustration" 
+      width={300} 
+      height={300} 
+      class="w-full md:w-1/2 mb-4 md:mb-0"
+    />
+    <div class="w-full md:w-1/2">
+      <p class="text-lg leading-relaxed mb-8">
+        I am a single, 32-year-old developer based out of Nashville, Tennessee. I am committed to sharing my interests in music, behavioral economics, and tech with individuals, teams, and organizations.
+      </p>
+    </div>
+  </div>
+
+{' '}
+<div class='mb-12'>
+	<h2 class='text-2xl font-semibold mb-4'>What I Love</h2>
+	<div class='bg-gray-800 p-6 rounded-lg'>
+		<ul class='list-disc list-inside space-y-2'>
+			<li>Reading, practicing Spanish, producing and distributing music</li>
+			<li>Compiling databases and digital content, caring for my cat and dog</li>
+			<li>Searching for beneficial connections and learning, growing, and evolving</li>
+		</ul>
+	</div>
+</div>
+
+{' '}
+<div class='mb-12'>
+	<h2 class='text-2xl font-semibold mb-4'>Mission</h2>
+	<div class='bg-blue-900 p-6 rounded-lg'>
+		<h3 class='font-bold mb-2'>Innovative Digital Presence</h3>
+		<ul class='list-disc list-inside space-y-2'>
+			<li>Create innovative digital products</li>
+			<li>Cultivate internet-based businesses</li>
+			<li>Strategic online presence</li>
+			<li>Data-driven insights</li>
+			<li>Engaged community building</li>
+		</ul>
+	</div>
+</div>
+
+  <footer class="text-center text-sm text-gray-500">
+    © 2024 Chris. All rights reserved.
+  </footer>
+</div>
