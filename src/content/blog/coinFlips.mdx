@@ -10,11 +10,13 @@ tags:
 title: R You Ready? Begin Your Data Analytics Journey with a Coin Flip Simulation
 ---
 
+import OutputDisplay from '../../components/OutputDisplay.astro'
+
 ## Introduction to Coin Flip Simulation in R
 
 Hey everyone! Today, we're going to do a quick simulation of flipping a coin 500 times using R. This simple script will help us understand some basics of data manipulation and random sampling. Let's get started!
 
-## 1. Ensuring Reproducibility with set.seed()
+## Ensuring Reproducibility with set.seed()
 
 First, let's set a random seed:
 
@@ -24,7 +26,7 @@ set.seed(123, sample.kind="Rejection")  # set random seed
 
 This ensures our "random" results are reproducible. Always run this immediately before generating random numbers.
 
-## 2. Simulating Coin Flips with sample()
+## Simulating Coin Flips with sample()
 
 Now let's simulate our coin flips:
 
@@ -47,8 +49,11 @@ Now, let's see what we've got:
 str(coinFlips)
 ```
 
-**Output:**
+<OutputDisplay>
+
 **chr [1:500] "Tails" "Heads" "Tails" "Heads" "Tails" "Heads" "Tails" ...**
+
+</OutputDisplay>
 
 What does this tell us?
 
@@ -58,7 +63,7 @@ What does this tell us?
 
 This `str()` function is super handy. It gives us a quick summary of our data's structure. Always a good idea to check this after you create a new dataset!
 
-## 3. Accessing Specific Elements with Indexing
+## Accessing Specific Elements with Indexing
 
 Curious about the 15th flip? Easy:
 
@@ -72,7 +77,7 @@ In R, we use square brackets `[]` for indexing. This notation is super useful:
 - We can also use it to get multiple elements: `coinFlips[c(1, 15, 30)]` would give us the 1st, 15th, and 30th flips
 - Or a range: `coinFlips[1:10]` gives us the first 10 flips
 
-## 4. Counting Occurrences with sum() and length()
+## Counting Occurrences with sum() and length()
 
 Let's count how many times we got "Tails":
 
@@ -81,8 +86,7 @@ sum(coinFlips=="Tails")
 length(coinFlips[coinFlips=="Tails"])
 ```
 
-**Output:**
-**[1] 239**
+<OutputDisplay>**[1] 239**</OutputDisplay>
 
 Both lines do the same thing, but in different ways:
 
@@ -98,12 +102,15 @@ Want to know the proportion of "Tails"? Just divide by the total number of flips
 sum(coinFlips=="Tails") / length(coinFlips)
 ```
 
-**Output:**
+<OutputDisplay>
+
 **[1] 0.478**
+
+</OutputDisplay>
 
 This gives us the percentage of "Tails" in decimal form (multiply by 100 for a percentage).
 
-## 5. Analyzing Odd and Even Flip Patterns with Subsetting
+## Analyzing Odd and Even Flip Patterns with Subsetting
 
 Let's get a bit fancier and compare odd-numbered flips to even-numbered ones:
 

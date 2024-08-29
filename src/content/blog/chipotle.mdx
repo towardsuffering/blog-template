@@ -10,11 +10,13 @@ tags:
 title: 'Data Analysis in R: Uncovering Chipotle Order Trends with Real-World Data'
 ---
 
+import OutputDisplay from '../../components/OutputDisplay.astro'
+
 ## Introduction to Chipotle Order Analysis
 
 Hey data enthusiasts! Today, we're diving into a tasty dataset: Chipotle orders. We'll use R to analyze order quantities, visualize our findings, and uncover some interesting patterns. This tutorial is perfect for those looking to spice up their R skills with some real-world data. Let's dig in!
 
-## 1. Setting Up Our Environment
+## Setting Up Our Environment
 
 First, let's make sure we have the tools we need:
 
@@ -28,7 +30,7 @@ What's happening here?
 - We check if the `ggplot2` package is installed. If not, we install it.
 - We then load the `ggplot2` library, which we'll use for visualization.
 
-## 2. Loading and Peeking at Our Data
+## Loading and Peeking at Our Data
 
 Now, let's load our Chipotle order data and take a quick look:
 
@@ -38,24 +40,13 @@ chipotleOrders <- read.csv("data/orders.csv", stringsAsFactors=FALSE)
 head(chipotleOrders)
 ```
 
-**Output:**
-
-```
-  cust_id quantity                                              item_name
-1       1        1                           Chips and Fresh Tomato Salsa
-2       1        1                                                   Izze
-3       1        1                                     Nantucket Nectar
-4       1        1     Chips and Tomatillo-Green Chili Salsa
-5       2        2                                        Chicken Bowl
-6       3        1                                        Chicken Bowl
-                                                      choice_description item_price
-1                                                                   NULL     $2.39
-2                                                           [Clementine]     $3.39
-3                                                                [Apple]     $3.39
-4                                                                   NULL     $2.39
-5 [Tomatillo-Red Chili Salsa (Hot), [Black Beans, Rice, Cheese, Sour ...    $16.98
-6 [Fresh Tomato Salsa (Mild), [Rice, Cheese, Sour Cream, Guacamole, ...    $10.98
-```
+<OutputDisplay>
+	cust_id quantity item_name 1 1 1 Chips and Fresh Tomato Salsa 2 1 1 Izze 3 1 1 Nantucket Nectar 4
+	1 1 Chips and Tomatillo-Green Chili Salsa 5 2 2 Chicken Bowl 6 3 1 Chicken Bowl choice_description
+	item_price 1 NULL $2.39 2 [Clementine] $3.39 3 [Apple] $3.39 4 NULL $2.39 5 [Tomatillo-Red Chili
+	Salsa (Hot), [Black Beans, Rice, Cheese, Sour ... $16.98 6 [Fresh Tomato Salsa (Mild), [Rice,
+	Cheese, Sour Cream, Guacamole, ... $10.98
+</OutputDisplay>
 
 What's happening here?
 
@@ -63,7 +54,7 @@ What's happening here?
 - We read our CSV file into a data frame called `chipotleOrders`.
 - `head()` shows us the first few rows of our data.
 
-## 3. Aggregating Data by Item Name
+## Aggregating Data by Item Name
 
 Let's sum up the quantities for each item:
 
@@ -72,24 +63,25 @@ qtyDF <- aggregate(quantity ~ item_name, FUN=sum, data=chipotleOrders)
 head(qtyDF)
 ```
 
-**Output:**
+<OutputDisplay>
 
-```
                   item_name quantity
-1    6 Pack Soft Drink      55
-2    Barbacoa Bowl         66
-3    Barbacoa Burrito      91
-4    Barbacoa Crispy Tacos  12
-5    Barbacoa Soft Tacos    25
-6    Bottled Water         162
-```
+
+1 6 Pack Soft Drink 55
+2 Barbacoa Bowl 66
+3 Barbacoa Burrito 91
+4 Barbacoa Crispy Tacos 12
+5 Barbacoa Soft Tacos 25
+6 Bottled Water 162
+
+</OutputDisplay>
 
 What's happening here?
 
 - We use `aggregate()` to sum up the quantities for each unique item name.
 - The result is stored in `qtyDF`, a new data frame with item names and their total quantities.
 
-## 4. Visualizing Item Quantities
+## Visualizing Item Quantities
 
 Now, let's create a bar plot of our data:
 
@@ -113,7 +105,7 @@ What's happening here?
 - We rotate x-axis labels for better readability.
 - `coord_flip()` turns this into a horizontal bar chart for easier reading of item names.
 
-## 5. Examining Raw Data
+## Examining Raw Data
 
 Let's look at our raw data:
 
@@ -123,7 +115,8 @@ qtyDF$quantity
 sort(qtyDF$quantity, decreasing=FALSE)
 ```
 
-**Output (truncated for brevity):**
+<OutputDisplay>
+
 [1] "6 Pack Soft Drink" "Barbacoa Bowl" "Barbacoa Burrito"  
 [4] "Barbacoa Crispy Tacos" "Barbacoa Soft Tacos" "Bottled Water"
 
@@ -132,6 +125,8 @@ sort(qtyDF$quantity, decreasing=FALSE)
 [1] 1 2 3 5 7 9 12 25 28 29 30 32 35 39
 [15] 44 50 54 55 57 66 68 85 91 106 110 117 126 146
 [29] 162 211 304 523 726 726 761 1000 1054 1522
+
+</OutputDisplay>
 
 What's happening here?
 
