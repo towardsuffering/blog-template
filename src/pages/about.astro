@@ -26,6 +26,50 @@ const title = 'About Chris'
 		</div>
 
 		<div class='mb-12'>
+			<div class='video-container relative w-full' style='padding-top: 56.25%;'>
+				<iframe
+					class='absolute top-0 left-0 w-full h-full'
+					width='560'
+					height='315'
+					src='https://www.youtube.com/embed/ShWxwITZlgQ?si=VAXV4OGka2cFY4l6'
+					title='YouTube video player'
+					frameborder='0'
+					allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+					referrerpolicy='strict-origin-when-cross-origin'
+					allowfullscreen></iframe>
+			</div>
+		</div>
+
+		<style>
+			.video-container {
+				border-radius: 20px;
+				padding: 10px;
+				background: linear-gradient(45deg, #ff9a9e, #fad0c4, #ffecd2);
+				box-shadow:
+					0 0 15px rgba(255, 182, 193, 0.7),
+					0 0 30px rgba(255, 182, 193, 0.5),
+					0 0 45px rgba(255, 182, 193, 0.3);
+				overflow: hidden;
+			}
+
+			.video-container::before {
+				content: '';
+				position: absolute;
+				top: 5px;
+				right: 5px;
+				bottom: 5px;
+				left: 5px;
+				background: white;
+				border-radius: 15px;
+				z-index: -1;
+			}
+
+			.video-container iframe {
+				border-radius: 10px;
+			}
+		</style>
+
+		<div class='mb-12'>
 			<h2 class='text-2xl font-semibold mb-4'>What I Love</h2>
 			<ul class='list-disc list-inside space-y-2 bg-gray-100 dark:bg-gray-800 p-6 rounded-lg'>
 				<li>Reading books, practicing Spanish, producing and distributing music</li>
