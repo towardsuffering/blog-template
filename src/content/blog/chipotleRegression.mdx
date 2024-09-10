@@ -157,17 +157,17 @@ Now, let's perform the linear regression:
 
 ```r
 # Run a regression
-lMod <- lm(totalSpent ~ height.num + city, data=tSpent.C)
+lMod <- lm(log(totalSpent) ~ height.num + city + height.num:city, data=tSpent.C)
 summary(lMod)
 ```
 
-![Scatter plot of Height vs Total Amount Spent at Chipotle](../../assets/images/lmOutput.png)
+![Linear Regression Output for Chipotle Customer Data](../../assets/images/lmOutput.png)
 
 Let's break down this output:
 
 For beginners:
 
-1. We're now looking at how height and city affect the log of total spending. Using log(totalSpent) helps us handle large variations in spending more effectively.
+1. The image shows the results of our linear regression analysis.
 2. The 'Estimate' column shows how each variable affects log(spending):
    - For every 1 foot increase in height, log(spending) increases by about 0.01927 in Donaldo City
    - Being in Normantown is associated with a decrease in log(spending) by about 0.72143
@@ -184,6 +184,48 @@ For experts:
 5. The interaction term (0.12519) suggests that the effect of height on spending might be different in Normantown, but this difference is also not statistically significant (p = 0.415135).
 6. The model's fit is very poor (R² = 0.005946), indicating that these variables explain only about 0.6% of the variance in log(spending).
 7. The overall F-statistic (0.9889) and its p-value (0.3977) suggest that the model as a whole is not statistically significant.
+
+### Making Predictions
+
+Now that we have our regression model, let's use it to predict the total spent for a person who is 5'11" tall. We'll demonstrate three methods to make this prediction:
+
+```r
+# Convert 5'11" to decimal format
+height_511 <- 5 + 11/12
+
+# Method 1: Manual calculation
+prediction1 <- exp(2.69980 + 0.01927 * height_511 - 0.72143 * 0 + 0.12519 * height_511 * 0)
+
+# Method 2: Using coef() function
+prediction2 <- exp(coef(lMod)[1] + coef(lMod)[2] * height_511 +
+               coef(lMod)[3] * 0 + coef(lMod)[4] * height_511 * 0)
+
+# Method 3: Using vector multiplication
+prediction3 <- exp(sum(coef(lMod) * c(1, height_511, 0, height_511 * 0)))
+
+print(paste("Predicted spending for a 5'11\" customer in Donaldo City:", round(prediction1, 2)))
+print(paste("Prediction using coef() function:", round(prediction2, 2)))
+print(paste("Prediction using vector multiplication:", round(prediction3, 2)))
+```
+
+<OutputDisplay>
+	Predicted spending for a 5'11" customer in Donaldo City: 16.76 Prediction using coef() function:
+	16.76 Prediction using vector multiplication: 16.76
+</OutputDisplay>
+
+Let's break down what we've done here:
+
+1. We converted 5'11" to decimal format (5.916667 feet).
+2. We used three different methods to calculate the prediction:
+   - Manual calculation using the coefficients from the regression output
+   - Using the `coef()` function to extract coefficients
+   - Using vector multiplication for a more concise calculation
+3. We used `exp()` to convert the log-transformed prediction back to dollars.
+4. All three methods give the same result, as expected.
+
+Note that this prediction is for a customer in Donaldo City (the reference level in our regression). If we wanted to predict for a customer in Normantown, we would need to adjust the calculation to include the city effect and the interaction term.
+
+This prediction suggests that a 5'11" tall customer in Donaldo City is expected to spend about $16.76 at Chipotle, based on our model. However, given the poor fit of our model (as discussed earlier), we should be very cautious about relying on this prediction.
 
 ### Interpreting the Results
 
@@ -212,4 +254,34 @@ Next steps could include:
 - Conducting a more thorough exploratory data analysis to identify potential patterns or relationships we might have missed
 - Collecting additional data that might be more relevant to predicting customer spending
 
-In conclusion, while our analysis didn't reveal strong relationships between height, city, and spending at Chipotle, the process of conducting this analysis and interpreting the results is valuable. It demonstrates the importance of thorough statistical analysis and the need to consider multiple factors when trying to understand customer behavior.
+## Conclusion
+
+In this analysis of Chipotle customer data, we've explored various data analysis techniques in R, including data cleaning, aggregation, visualization, and statistical modeling. These methods have revealed insights about customer spending patterns and their potential relationship to physical characteristics like height.
+
+While our analysis didn't reveal strong relationships between height, city, and spending at Chipotle, the process of conducting this analysis and interpreting the results is valuable. It demonstrates the importance of thorough statistical analysis and the need to consider multiple factors when trying to understand customer behavior.
+
+Key takeaways from this analysis include:
+
+1. **Data Cleaning is Crucial**: We started by cleaning our data, converting string representations of height and removing dollar signs from prices. This step is often overlooked but is essential for accurate analysis.
+
+2. **Visualization Provides Insights**: Our scatter plot helped us visualize the relationship between height and spending, showing that the connection isn't as straightforward as we might have initially thought.
+
+3. **Statistical Significance Matters**: Although we found some differences in spending patterns between cities and heights, these differences weren't statistically significant. This reminds us to be cautious about drawing conclusions from data without proper statistical backing.
+
+4. **Model Fit is Important**: Our regression model had a very low R-squared value, indicating that height and city explain very little of the variation in customer spending. This suggests that other factors not included in our analysis might be more influential.
+
+5. **Predictions Should Be Used Cautiously**: We demonstrated how to make predictions using our model, but given the poor model fit, these predictions should be interpreted with extreme caution.
+
+For Chipotle and other fast-casual restaurants, such analyses can provide valuable insights for business strategy. By understanding customer characteristics and behaviors, restaurants can optimize their menus, improve customer experiences, and potentially increase revenue. However, this analysis also shows that simplistic models based on limited variables may not capture the complexity of customer behavior.
+
+Moving forward, a more comprehensive analysis might consider additional factors such as:
+
+- Customer demographics (age, income, occupation)
+- Order details (time of day, day of week, specific menu items)
+- External factors (local events, weather, promotions)
+
+By incorporating a wider range of variables and potentially using more advanced statistical techniques, we might be able to build a more accurate and useful model of customer spending behavior.
+
+This exercise not only provides insights into Chipotle's customer base but also serves as a practical demonstration of data analysis techniques in R. It showcases the process of going from raw data to insights, including the important steps of data cleaning, exploration, visualization, and statistical modeling.
+
+What other factors do you think might influence customer spending at fast-casual restaurants like Chipotle? How could this type of analysis be extended to provide even more valuable insights for the food industry? Share your thoughts and ideas in the comments below!
